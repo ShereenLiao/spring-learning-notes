@@ -12,6 +12,10 @@ public class App {
         BookDao bookDao = (BookDao)ctx.getBean("bookDao");
         bookDao.save();
         System.out.println(bookDao);
+
+        BookService bs = (BookService) ctx.getBean(BookService.class);
+        bs.serve();
+
     }
 
 }
