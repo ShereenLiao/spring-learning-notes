@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--    constructor-->
+    <bean id="BookDao" class="nyu.dao.impl.BookDaoImpl" init-method="init">
+        <property name="databaseNum" value="mysql"/>
+    </bean>
+<!--    在bookservice中注入bookdao-->
+    <bean id="BookService" class="nyu.service.impl.BookServiceImpl" scope="prototype">
+        <property name="bookDao" ref="BookDao"/>
+    </bean>
+<!--    方式二：static factory-->
+<!--    <bean id="orderDao" class = "nyu.factory.OrderDaoFactory" factory-method="getOrderDao"/>-->
+<!--    方法三：实例化工厂实例-->
+    <bean id="userFactory" class="nyu.factory.UserDaoFactory"/>
+    <bean id="userDao" factory-method="getUserDao" factory-bean="userFactory"/>
+
+
+</beans>
