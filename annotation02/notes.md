@@ -67,3 +67,126 @@ public class App {
 }
 ```
 
+## Bean Lifecycle
+
+### Singleton or Prototype: Define using @Scope
+singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。 \
+prototype : 每次请求都会创建一个新的 bean 实例。
+```
+    @Component("bookDao")
+    @Scope("prototype")
+public class BookDaoImpl  implements BookDao {
+    @Override
+    public void save() {
+        System.out.println("book dao save ... ");
+    }
+}
+```
+
+### Life Cycle:
+```
+public class BookDaoImpl  implements BookDao {
+    @Override
+    public void save() {
+        System.out.println("book dao save ... ");
+    }
+
+    //run after constructor
+    @PostConstruct
+    public void init(){
+        System.out.println("init ...");
+    }
+
+    //run before destructor
+    @PreDestroy
+    public void destroy(){
+        System.out.println("destory ...");
+    }
+}
+```
+
+## Autowired
+
+
+### Use type: @Autowired
+```
+@Service
+public class BookServiceImpl implements BookService {
+
+    @Autowired
+    private BookDao bookDao;
+
+    @Override
+    public void serve() {
+        bookDao.save();
+        System.out.println("book service serve ...");
+    }
+}
+```
+
+### Use name: @Autowired, @Qualifier
+```
+@Service
+public class BookServiceImpl implements BookService {
+
+    @Autowired
+    @Qualifier("bookDao")
+    private BookDao bookDao;
+
+    @Override
+    public void serve() {
+        bookDao.save();
+        System.out.println("book service serve ...");
+    }
+}
+```
+
+### Primitive Injection: @Value
+```
+public class BookDaoImpl  implements BookDao {
+    @Value("1111")
+    private String name;
+}
+```
+
+### Use external properties
+Add @PropertySource("application.properties") in SpringConfig.
+```
+@Configuration
+@ComponentScan("com.example.annotation02")
+@PropertySource("application.properties")
+public class SpringConfig {
+}
+```
+User properties : @Value("${name}")
+```
+public class BookDaoImpl  implements BookDao {
+    @Value("${name}")
+    private String name;
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
