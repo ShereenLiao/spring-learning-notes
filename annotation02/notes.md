@@ -1,3 +1,4 @@
+
 # 12.31 annotations development 
 
 ## Annotation development:
@@ -303,22 +304,6 @@ public class MyBatisConfig {
     }
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
