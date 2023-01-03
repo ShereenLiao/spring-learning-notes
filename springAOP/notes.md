@@ -1,8 +1,8 @@
-# A0P: Aspect Oriented Programming: 面向切片编程，一种编程范式，指导开发者如何组织程序结构
+# A0P: Aspect Oriented Programming: 面向切片编程
+一种编程范式，指导开发者如何组织程序结构
 
 作用：在不修改原始设计的基础上进行功能增强
 理念：无入侵式编程
-
 
 Join point（连接点） ：目标对象中的方法，类似数据库表中的一条记录
 
