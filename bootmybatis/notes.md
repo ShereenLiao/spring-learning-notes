@@ -1,4 +1,4 @@
-# 1.2
+# 1.2 Springboot 整合 mybatis 以及java config mybatis
 
 ## entity层、dao层、service层、mapper层、controller层详解
 
@@ -164,7 +164,6 @@ public class jdbcConfig {
 2. 设置测试环境：@ContextConfiguration(classes = SpringConfig.class)
 3. 将要测试的service 自动装配进来： @Autowired
 4. 在测试的case前加： @Test
-5. 
 ```java
 package com.code.bootmybatis.service;
 
