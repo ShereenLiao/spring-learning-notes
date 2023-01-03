@@ -12,7 +12,7 @@ Advice（通知） ：共性功能，通知指的就是指拦截到连接点之�
 
 Aspect（切面） ：描述通知与切入点的对应关系，切点、连接点、通知等的载体，它们加起来就是一个切面
 
-Target object（目标对象） ：包含连接点的对象，也被称作被通知或被代理对象
+Target object（目标对象） ：包含连接点的对象，也被称作被通知或**被代理对象**
 
 AOP proxy（AOP 代理对象） ：AOP创建的对象，包含通知
 
@@ -25,12 +25,13 @@ After returning advice（后置通知） ：后置通知
 Around advice（环绕通知） ：前后都有，最常用的一种通知
 
 ## Dependency
+! Problem: spring-context version needs to match jdk version
 ```xml
 <dependencies>
         <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>5.2.22.RELEASE</version>
+			<version>6.0.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -90,7 +91,56 @@ public class SpringConfig {
 }
 ```
 
-! Problem: spring-context version needs to match jdk version
+## AOP 工作流程
+1. spring容器启动
+2. 读取所有切面配置中的切入点
+3. 初始化bean，判定对应类中的方法是否匹配到切入点
+   1. 匹配失败，创建对象
+   2. 匹配成功，创建原始对象（目标对象）的代理对象
+4. 获取bean时
+   1. 获取bean，调用对象，完成操作
+   2. 代理对象：根据代理对象的运行模式运行原始方法 and 增强的内容， 完成操作
+
+## AOP 切入点表达式
+格式：
+```
+execution(public User com.code.springaop.UserService.update(int))
+```
+通配：
+* *:单个任意符号
+* ..: parameters/package，代替参数时不能代替空参数
+* +: 子类型
+
+## AOP通知类型
+* 前置 @Before
+* 后置 @After：即使有异常也会执行
+* 环绕 @Around 需要自己设置joinpoint执行位置
+```
+    @Around("pt()")
+    public void around(ProceedingJoinPoint pjp) throws Throwable {
+        System.out.println("before advice");
+        pjp.proceed();
+        System.out.println("after advice");
+    }
+```
+* 如果有返回值需要将返回值返回，返回类型是object。
+* 环绕通知必须依赖形参ProceedingJoinPoint实现原方法的调用。
+* 由于无法得知原始方法是否会抛出异常，因此环绕通知方法必须抛出throwable对象。
+```
+    @Around("pt()")
+    public Object around(ProceedingJoinPoint pjp) throws Throwable {
+        System.out.println("before advice");
+        Object obj = pjp.proceed();
+        System.out.println("after advice");
+        return obj;
+    }
+```
+* 返回后 @AfterRunning: 只有在没有抛异常才会继续运行
+* 有异常后执行 @AfterThrowing: 有异常才执行
+
+
+
+
 
 
 
