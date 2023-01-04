@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 
 
 public class jdbcConfig {
-
     @Value("${jdbc.username}")
     private String username;
     @Value("${jdbc.password}")
@@ -23,6 +22,7 @@ public class jdbcConfig {
     private String driver;
     @Value("${jdbc.url}")
     private String url;
+
 
     @Bean
     public DataSource dataSource(){
