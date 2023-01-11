@@ -23,6 +23,14 @@ public class BookServiceImpl  implements BookService {
     }
 }
 ```
+### Category
+* @Repository： 定义数据层bean
+* @Controller： 定义表现层bean
+* @Service： 定义业务层bean
+
+### @Bean
+1. 指示了一种方法，产生一个bean的方法，并且交给Spring容器管理。
+2. @Bean 用在方法上，告诉Spring容器，你可以从下面这个方法中拿到一个Bean
 ### In applicationContext.xml, add the line to scan beans in the package.
 ```
  <context:component-scan base-package="com.example.annotation02.dao"/>
@@ -71,8 +79,9 @@ public class App {
 ## Bean Lifecycle
 
 ### Singleton or Prototype: Define using @Scope
-singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。 \
-prototype : 每次请求都会创建一个新的 bean 实例。
+singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。 
+
+prototype : 每次请求都会创建一个新的 bean 实例。@Scope("prototype")
 ```
     @Component("bookDao")
     @Scope("prototype")
@@ -125,7 +134,7 @@ public class BookServiceImpl implements BookService {
 }
 ```
 
-### Use name: @Autowired, @Qualifier
+### 如果有两个名称相同的bean，需要用 name装配: @Autowired, @Qualifier
 ```
 @Service
 public class BookServiceImpl implements BookService {
